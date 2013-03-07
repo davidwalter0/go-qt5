@@ -36,7 +36,7 @@ Windows / Linux / MacOS X
     package main
 
     import (
-	    "github.com/visualfc/go-qt5/qt5"
+	    "github.com/salviati/go-qt5/qt5"
     )
     
     func main() {
