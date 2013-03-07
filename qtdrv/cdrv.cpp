@@ -268,6 +268,7 @@ enum DRVID_WIDGET_ENUM {
     _ID_WIDGET_UPDATESENABLED,
     _ID_WIDGET_ISACTIVATEWINDOW,
     _ID_WIDGET_ACTIVATEWINDOW,
+    _ID_WIDGET_SETSIZEPOLICYHV,
     _ID_WIDGET_SETSIZEPOLICY,
     _ID_WIDGET_SIZEPOLICY,
     _ID_WIDGET_DONE,
@@ -1563,6 +1564,10 @@ int drv_widget(int drvid, void *a0, void* a1, void* a2, void* a3, void* a4, void
     }
     case _ID_WIDGET_ACTIVATEWINDOW: {
         self->activateWindow();
+        break;
+    }
+    case _ID_WIDGET_SETSIZEPOLICYHV: {
+        self->setSizePolicy(drvGetSizePolicyPolicy(a1),drvGetSizePolicyPolicy(a2));
         break;
     }
     case _ID_WIDGET_SETSIZEPOLICY: {
@@ -2978,7 +2983,7 @@ int drv_dialog(int drvid, void *a0, void* a1, void* a2, void* a3, void* a4, void
         break;
     }
     case _ID_DIALOG_ONACCEPTED: {
-        QObject::connect(self,SIGNAL(acceped()),drvNewSignal(self,a1,a2),SLOT(call()));
+        QObject::connect(self,SIGNAL(accepted()),drvNewSignal(self,a1,a2),SLOT(call()));
         break;
     }
     case _ID_DIALOG_ONREJECTED: {
