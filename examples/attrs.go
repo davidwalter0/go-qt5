@@ -2,39 +2,39 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 )
 
 var exit = make(chan bool)
 
 func main() {
-	fmt.Println(ui.Version())
-	ui.Main(func() {
+	fmt.Println(qt5.Version())
+	qt5.Main(func() {
 		go main_ui()
-		ui.Run()
+		qt5.Run()
 		exit <- true
 	})
 }
 
 func main_ui() {
-ui.OnInsertObject(func(item interface{}) {
+	qt5.OnInsertObject(func(item interface{}) {
 		fmt.Println("add item", item)
 	})
-	ui.OnRemoveObject(func(item interface{}) {
+	qt5.OnRemoveObject(func(item interface{}) {
 		fmt.Println("remove item", item)
 	})
 
-	w := ui.NewWidget()
+	w := qt5.NewWidget()
 	defer w.Close()
 
 	w.SetWindowTitle("This is a test")
 	fmt.Println(w.WindowTitle())
 
-	vbox := ui.NewVBoxLayout()
+	vbox := qt5.NewVBoxLayout()
 	fmt.Println(vbox)
 	w.SetLayout(vbox)
 
-	lbl := ui.NewLabel()
+	lbl := qt5.NewLabel()
 	lbl.SetText("<h2><i>Hello</i> <font color=blue><a href=\"ui\">UI</a></font></h2>")
 	lbl.OnLinkActivated(fnTEST)
 	vbox.AddWidget(lbl)
@@ -42,7 +42,7 @@ ui.OnInsertObject(func(item interface{}) {
 
 	//runtime.GC()
 
-	btn := ui.NewButton()
+	btn := qt5.NewButton()
 	btn.SetText("WbcdefgwqABCDEFQW")
 	font := btn.Font()
 	defer font.Close()
@@ -50,7 +50,7 @@ ui.OnInsertObject(func(item interface{}) {
 	btn.SetFont(font)
 	fmt.Println("f3->", btn.Font())
 
-	btn2 := ui.NewButton()
+	btn2 := qt5.NewButton()
 	font.SetPointSize(18)
 	btn2.SetAttr("text", "WbcdefgwqABCDEFQW")
 	btn2.SetAttr("font", font)
@@ -59,13 +59,13 @@ ui.OnInsertObject(func(item interface{}) {
 		fmt.Println(btn)
 		btn.Close()
 	})
-	btn.OnCloseEvent(func(e *ui.CloseEvent) {
+	btn.OnCloseEvent(func(e *qt5.CloseEvent) {
 		fmt.Println("Close", e)
 	})
-	btn3 := ui.NewButton()
+	btn3 := qt5.NewButton()
 	btn3.SetText("Exit")
 	btn3.OnClicked(func() {
-		ui.Exit(0)
+		qt5.Exit(0)
 	})
 
 	l := w.Layout()
@@ -79,11 +79,11 @@ ui.OnInsertObject(func(item interface{}) {
 
 	fmt.Println(btn.Font())
 
-	w.OnResizeEvent(func(e *ui.ResizeEvent) {
+	w.OnResizeEvent(func(e *qt5.ResizeEvent) {
 		fmt.Println(e)
 	})
 
-	w.OnPaintEvent(func(ev *ui.PaintEvent) {
+	w.OnPaintEvent(func(ev *qt5.PaintEvent) {
 		fnPaint(ev, w)
 	})
 
@@ -92,12 +92,12 @@ ui.OnInsertObject(func(item interface{}) {
 	<-exit
 }
 
-func fnPaint(ev *ui.PaintEvent, w *ui.Widget) {
-	p := ui.NewPainter()
+func fnPaint(ev *qt5.PaintEvent, w *qt5.Widget) {
+	p := qt5.NewPainter()
 	defer p.Close()
 	p.Begin(w)
-	p.DrawPoint(ui.Pt(10, 10))
-	p.DrawLine(ui.Pt(10, 10), ui.Pt(100, 100))
+	p.DrawPoint(qt5.Pt(10, 10))
+	p.DrawLine(qt5.Pt(10, 10), qt5.Pt(100, 100))
 	p.End()
 }
 

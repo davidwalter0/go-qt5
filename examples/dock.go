@@ -2,43 +2,43 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 	"runtime"
 	"time"
 )
 
 func main() {
 	runtime.GOMAXPROCS(4)
-	ui.Main(main_ui)
+	qt5.Main(main_ui)
 }
 
 func main_ui() {
-	ui.OnInsertObject(func(v interface{}) {
+	qt5.OnInsertObject(func(v interface{}) {
 		fmt.Println("add item", v)
 	})
-	ui.OnRemoveObject(func(v interface{}) {
+	qt5.OnRemoveObject(func(v interface{}) {
 		fmt.Println("remove item", v)
 	})
-	w := ui.NewMainWindow()
+	w := qt5.NewMainWindow()
 	defer w.Close()
 	go func() {
-		dock := ui.NewDockWidgetWithTitle("Dock")
-		dock.SetDock(ui.NewButtonWithText("Hello"))
-		w.AddDockWidget(ui.LeftDockWidgetArea, dock)
-		btn := ui.NewButtonWithText("HideDock")
+		dock := qt5.NewDockWidgetWithTitle("Dock")
+		dock.SetDock(qt5.NewButtonWithText("Hello"))
+		w.AddDockWidget(qt5.LeftDockWidgetArea, dock)
+		btn := qt5.NewButtonWithText("HideDock")
 		w.SetCentralWidget(btn)
-		w.SetSize(ui.Sz(200, 200))
+		w.SetSize(qt5.Sz(200, 200))
 
-		tb := ui.NewToolBarWithTitle("Standard")
-		tb.AddWidget(ui.NewButtonWithText("ok"))
+		tb := qt5.NewToolBarWithTitle("Standard")
+		tb.AddWidget(qt5.NewButtonWithText("ok"))
 		w.AddToolBar(tb)
 
-		tb.OnCloseEvent(func(e *ui.CloseEvent) {
+		tb.OnCloseEvent(func(e *qt5.CloseEvent) {
 			fmt.Println("tb close", e)
 		})
-		sb := ui.NewStatusBar()
+		sb := qt5.NewStatusBar()
 		w.SetStatusBar(sb)
-		sb.OnCloseEvent(func(e *ui.CloseEvent) {
+		sb.OnCloseEvent(func(e *qt5.CloseEvent) {
 			fmt.Println("sb close", e)
 		})
 
@@ -47,7 +47,7 @@ func main_ui() {
 			runtime.GC()
 			btn.SetText(btn.Text())
 		})
-		dock.OnCloseEvent(func(e *ui.CloseEvent) {
+		dock.OnCloseEvent(func(e *qt5.CloseEvent) {
 			fmt.Println(e)
 		})
 
@@ -81,5 +81,5 @@ func main_ui() {
 		w.Show()
 	}()
 
-	ui.Run()
+	qt5.Run()
 }

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package ui
+package qt5
 
 /*
 #include <stdlib.h>
@@ -33,7 +33,7 @@ static void init_utf8_info(int classid, int drvid)
 }
 
 */
-// #cgo LDFLAGS: -L../lib -lqtdrv
+// #cgo LDFLAGS: -L../lib -lgoqt5drv
 import "C"
 import "unsafe"
 import "fmt"

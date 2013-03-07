@@ -26,7 +26,7 @@ static void* drvGetFontKey(const QFont *font)
 }
 void* drvGetPixmapKey(const QPixmap *pixmap)
 {
-    return pixmap->pixmapData();
+    return ((QPixmap*)pixmap)->data_ptr().data();
 }
 void* drvGetImageKey(const QImage *image)
 {

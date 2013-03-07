@@ -1,8 +1,8 @@
-#go-ui 0.1.1
+#go-qt5 0.1.1
 =====
 
 ##Introduction
-go-ui is a cross-platform golang ui tool kit, based on qt.
+go-qt5 is a cross-platform golang ui tool kit, based on qt5.
 
 Lua code that generates the wrappers (`uiobjs.go` and `cdrv.cpp`) can be found under `make`.
 
@@ -12,22 +12,22 @@ The wrapper code is by far incomplete. Adding new functionality usually consists
 Windows / Linux / MacOS X
 
 ##License
-    go-ui lib BSD
+    go-qt5 lib BSD
     qtdrv lib LGPL
 
-##Build go-ui and examples
+##Build go-qt5 and examples
 
-###1.get go-ui
-    $ go get github.com/visualfc/go-ui
+###1.get go-qt5
+    $ go get github.com/salviati/go-qt5
 ###2.build qtdrv, need install QtSDK
-    $ cd go-ui/qtdrv
+    $ cd go-qt5/qtdrv
     $ qmake "CONFIG+=release"
     $ make
-###3.build go-ui
-    $ cd go-ui/ui
+###3.build go-qt5
+    $ cd go-qt5/ui
     $ go install
 ###4.build examples
-    $ cd go-ui/examples
+    $ cd go-qt5/examples
     $ go build -ldflags '-r ../lib' minimal.go
     $ ./minimal
 
@@ -36,7 +36,7 @@ Windows / Linux / MacOS X
     package main
 
     import (
-	    "github.com/visualfc/go-ui/ui"
+	    "github.com/visualfc/go-qt5/ui"
     )
     
     func main() {

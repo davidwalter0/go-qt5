@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 	"io/ioutil"
 	"runtime"
 )
 
 type MainWindow struct {
-	ui.Widget
-	tab  *ui.TabWidget
-	sbar *ui.StatusBar
+	qt5.Widget
+	tab  *qt5.TabWidget
+	sbar *qt5.StatusBar
 }
 
 func (p *MainWindow) Init() *MainWindow {
@@ -19,40 +19,40 @@ func (p *MainWindow) Init() *MainWindow {
 	}
 	p.SetWindowTitle("MainWindow")
 
-	p.tab = ui.NewTabWidget()
+	p.tab = qt5.NewTabWidget()
 
 	p.tab.AddTab(p.createStdTab(), "Standard", nil)
 	p.tab.AddTab(p.createMyTab(), "Custom", nil)
 	p.tab.AddTab(p.createToolBox(), "ToolBox", nil)
 
-	p.sbar = ui.NewStatusBar()
+	p.sbar = qt5.NewStatusBar()
 
-	menubar := ui.NewMenuBar()
-	menu := ui.NewMenuWithTitle("&File")
+	menubar := qt5.NewMenuBar()
+	menu := qt5.NewMenuWithTitle("&File")
 	//menu.SetTitle("&File")
 	menubar.AddMenu(menu)
 
-	act := ui.NewAction()
+	act := qt5.NewAction()
 	act.SetText("&Quit")
 	act.OnTriggered(func(bool) {
 		p.Close()
 	})
-	ic := ui.NewIconWithFile("images/close.png")
+	ic := qt5.NewIconWithFile("images/close.png")
 	//defer ic.Close()
 	act.SetIcon(ic)
 	menu.AddAction(act)
 
-	toolBar := ui.NewToolBar()
+	toolBar := qt5.NewToolBar()
 	toolBar.AddAction(act)
 	toolBar.AddSeparator()
-	cmb := ui.NewComboBox()
+	cmb := qt5.NewComboBox()
 	cmb.AddItem("test1")
 	cmb.AddItem("test2")
 	cmb.SetToolTip("ComboBox")
 	cmbAct := toolBar.AddWidget(cmb)
 	fmt.Println(cmbAct)
 
-	vbox := ui.NewVBoxLayout()
+	vbox := qt5.NewVBoxLayout()
 	vbox.SetMargin(0)
 	vbox.SetSpacing(0)
 	vbox.SetMenuBar(menubar)
@@ -66,11 +66,11 @@ func (p *MainWindow) Init() *MainWindow {
 		p.sbar.ShowMessage("current: "+p.tab.TabText(index), 0)
 	})
 
-	systray := ui.NewSystemTray()
+	systray := qt5.NewSystemTray()
 	systray.SetContextMenu(menu)
 	systray.SetIcon(ic)
 	systray.SetVisible(true)
-	systray.ShowMessage("hello", "this is a test", ui.Information, 1000)
+	systray.ShowMessage("hello", "this is a test", qt5.Information, 1000)
 	ic2 := systray.Icon()
 	fmt.Println(ic2)
 
@@ -79,24 +79,24 @@ func (p *MainWindow) Init() *MainWindow {
 	return p
 }
 
-func (p *MainWindow) createStdTab() *ui.Widget {
-	w := ui.NewWidget()
-	vbox := ui.NewVBoxLayout()
+func (p *MainWindow) createStdTab() *qt5.Widget {
+	w := qt5.NewWidget()
+	vbox := qt5.NewVBoxLayout()
 	w.SetLayout(vbox)
 
-	ed := ui.NewLineEdit()
+	ed := qt5.NewLineEdit()
 	ed.SetInputMask("0000-00-00")
 	ed.SetText("2012-01-12")
 
-	lbl := ui.NewLabel()
+	lbl := qt5.NewLabel()
 	lbl.SetText("Label")
-	btn := ui.NewButton()
+	btn := qt5.NewButton()
 	btn.SetText("Button")
-	chk := ui.NewCheckBox()
+	chk := qt5.NewCheckBox()
 	chk.SetText("CheckBox")
-	radio := ui.NewRadio()
+	radio := qt5.NewRadio()
 	radio.SetText("Radio")
-	cmb := ui.NewComboBox()
+	cmb := qt5.NewComboBox()
 	cmb.AddItem("001")
 	cmb.AddItem("002")
 	cmb.AddItem("003")
@@ -106,15 +106,15 @@ func (p *MainWindow) createStdTab() *ui.Widget {
 		fmt.Println(cmb.ItemText(v))
 	})
 
-	slider := ui.NewSlider()
+	slider := qt5.NewSlider()
 	slider.SetTickInterval(50)
-	slider.SetTickPosition(ui.TicksBothSides)
+	slider.SetTickPosition(qt5.TicksBothSides)
 	slider.SetSingleStep(1)
 
-	scl := ui.NewScrollBar()
+	scl := qt5.NewScrollBar()
 	fmt.Println(slider.Range())
 
-	dial := ui.NewDial()
+	dial := qt5.NewDial()
 
 	dial.SetNotchesVisible(true)
 	dial.SetNotchTarget(10)
@@ -133,37 +133,37 @@ func (p *MainWindow) createStdTab() *ui.Widget {
 	return w
 }
 
-func (p *MainWindow) createToolBox() ui.IWidget {
-	tb := ui.NewToolBox()
-	tb.AddItem(ui.NewButtonWithText("button"), "btn", nil)
-	tb.AddItem(ui.NewLabelWithText("Label\nInfo"), "Label", nil)
-	pixmap := ui.NewPixmapWithFile("images/liteide128.png")
+func (p *MainWindow) createToolBox() qt5.IWidget {
+	tb := qt5.NewToolBox()
+	tb.AddItem(qt5.NewButtonWithText("button"), "btn", nil)
+	tb.AddItem(qt5.NewLabelWithText("Label\nInfo"), "Label", nil)
+	pixmap := qt5.NewPixmapWithFile("images/liteide128.png")
 	//defer pixmap.Close()
-	lbl := ui.NewLabel()
+	lbl := qt5.NewLabel()
 	lbl.SetPixmap(pixmap)
 	tb.AddItem(lbl, "Lalel Pixmap", nil)
 	buf, err := ioutil.ReadFile("images/liteide128.png")
 	if err == nil {
-		pixmap2 := ui.NewPixmapWithData(buf)
-		tb.AddItem(ui.NewLabelWithPixmap(pixmap2), "Lalel Pixmap2", nil)
+		pixmap2 := qt5.NewPixmapWithData(buf)
+		tb.AddItem(qt5.NewLabelWithPixmap(pixmap2), "Lalel Pixmap2", nil)
 	}
 	return tb
 }
 
-func (p *MainWindow) createMyTab() *ui.Widget {
-	w := ui.NewWidget()
-	vbox := ui.NewVBoxLayout()
-	hbox := ui.NewHBoxLayout()
+func (p *MainWindow) createMyTab() *qt5.Widget {
+	w := qt5.NewWidget()
+	vbox := qt5.NewVBoxLayout()
+	hbox := qt5.NewHBoxLayout()
 	my := new(MyWidget).Init()
-	lbl := ui.NewLabel()
+	lbl := qt5.NewLabel()
 	lbl.SetText("this is custome widget - draw lines")
-	btn := ui.NewButton()
+	btn := qt5.NewButton()
 	btn.SetText("Clear")
 	btn.OnClicked(func() {
 		my.Clear()
 	})
 	hbox.AddWidget(lbl)
-	hbox.AddWidgetWith(btn, 0, ui.AlignRight)
+	hbox.AddWidgetWith(btn, 0, qt5.AlignRight)
 	vbox.AddLayout(hbox)
 	vbox.AddWidgetWith(my, 1, 0)
 	w.SetLayout(vbox)
@@ -171,38 +171,38 @@ func (p *MainWindow) createMyTab() *ui.Widget {
 }
 
 func main() {
-	ui.Main(ui_main)
+	qt5.Main(ui_main)
 }
 
 func ui_main() {
 	exit := make(chan bool)
 	go func() {
 		fmt.Println("vfc/ui")
-		ui.OnInsertObject(func(v interface{}) {
+		qt5.OnInsertObject(func(v interface{}) {
 			fmt.Println("add item", v)
 		})
-		ui.OnRemoveObject(func(v interface{}) {
+		qt5.OnRemoveObject(func(v interface{}) {
 			fmt.Println("remove item", v)
 		})
 		w := new(MainWindow).Init()
 		defer w.Close()
 
 		w.SetSizev(400, 300)
-		w.OnCloseEvent(func(e *ui.CloseEvent) {
+		w.OnCloseEvent(func(e *qt5.CloseEvent) {
 			fmt.Println("close", e)
 		})
 		w.Show()
 		<- exit
 	}()
-	ui.Run()
+	qt5.Run()
 	exit <- true
 }
 
 type MyWidget struct {
-	ui.Widget
-	lines [][]ui.Point
-	line  []ui.Point
-	font  *ui.Font
+	qt5.Widget
+	lines [][]qt5.Point
+	line  []qt5.Point
+	font  *qt5.Font
 }
 
 func (p *MyWidget) Name() string {
@@ -210,45 +210,45 @@ func (p *MyWidget) Name() string {
 }
 
 func (p *MyWidget) String() string {
-	return ui.DumpObject(p)
+	return qt5.DumpObject(p)
 }
 
 func (p *MyWidget) Init() *MyWidget {
 	if p.Widget.Init() == nil {
 		return nil
 	}
-	p.font = ui.NewFontWith("Timer", 16, 87)
+	p.font = qt5.NewFontWith("Timer", 16, 87)
 	p.font.SetItalic(true)
-	p.Widget.OnPaintEvent(func(e *ui.PaintEvent) {
+	p.Widget.OnPaintEvent(func(e *qt5.PaintEvent) {
 		p.paintEvent(e)
 	})
-	p.Widget.OnMousePressEvent(func(e *ui.MouseEvent) {
+	p.Widget.OnMousePressEvent(func(e *qt5.MouseEvent) {
 		p.mousePressEvent(e)
 	})
-	p.Widget.OnMouseMoveEvent(func(e *ui.MouseEvent) {
+	p.Widget.OnMouseMoveEvent(func(e *qt5.MouseEvent) {
 		p.mouseMoveEvent(e)
 	})
-	p.Widget.OnMouseReleaseEvent(func(e *ui.MouseEvent) {
+	p.Widget.OnMouseReleaseEvent(func(e *qt5.MouseEvent) {
 		p.mouseReleaseEvent(e)
 	})
-	ui.InsertObject(p)
+	qt5.InsertObject(p)
 	return p
 }
 
 func (p *MyWidget) Clear() {
-	p.lines = [][]ui.Point{}
+	p.lines = [][]qt5.Point{}
 	p.Update()
 }
 
-func (p *MyWidget) paintEvent(e *ui.PaintEvent) {
-	paint := ui.NewPainter()
+func (p *MyWidget) paintEvent(e *qt5.PaintEvent) {
+	paint := qt5.NewPainter()
 	defer paint.Close()
 
 	paint.Begin(p)
 	paint.SetFont(p.font)
 	paint.DrawLines(p.line)
 	paint.SetFont(p.font)
-	paint.DrawText(ui.Pt(100, 100), "draw test")
+	paint.DrawText(qt5.Pt(100, 100), "draw test")
 	for _, v := range p.lines {
 		//paint.DrawLines(v)
 		paint.DrawPolyline(v)
@@ -257,19 +257,19 @@ func (p *MyWidget) paintEvent(e *ui.PaintEvent) {
 	runtime.GC()
 }
 
-func (p *MyWidget) mousePressEvent(e *ui.MouseEvent) {
+func (p *MyWidget) mousePressEvent(e *qt5.MouseEvent) {
 	p.line = append(p.line, e.Pos())
 	p.Update()
 }
 
-func (p *MyWidget) mouseMoveEvent(e *ui.MouseEvent) {
+func (p *MyWidget) mouseMoveEvent(e *qt5.MouseEvent) {
 	p.line = append(p.line, e.Pos())
 	p.Update()
 }
 
-func (p *MyWidget) mouseReleaseEvent(e *ui.MouseEvent) {
+func (p *MyWidget) mouseReleaseEvent(e *qt5.MouseEvent) {
 	p.line = append(p.line, e.Pos())
 	p.lines = append(p.lines, p.line)
-	p.line = []ui.Point{}
+	p.line = []qt5.Point{}
 	p.Update()
 }

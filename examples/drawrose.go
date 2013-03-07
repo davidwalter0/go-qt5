@@ -38,7 +38,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 	"math"
 	"math/rand"
 )
@@ -59,21 +59,21 @@ var (
 )
 
 func main() {
-	ui.Main(ui_main)
+	qt5.Main(ui_main)
 }
 
 func ui_main() {
-	w := ui.NewWidget()
+	w := qt5.NewWidget()
 	defer w.Close()
 	w.SetWindowTitle("Rose")
 
-	rose := ui.NewWidget()
-	rose.SetMinimumSize(ui.Sz(510, 510))
+	rose := qt5.NewWidget()
+	rose.SetMinimumSize(qt5.Sz(510, 510))
 
-	img := ui.NewImageWithSize(500, 500)
+	img := qt5.NewImageWithSize(500, 500)
 	defer img.Close()
 
-	imgPainter := ui.NewPainterWithImage(img)
+	imgPainter := qt5.NewPainterWithImage(img)
 	imgPainter.InitFrom(rose)
 	defer imgPainter.Close()
 
@@ -81,7 +81,7 @@ func ui_main() {
 	var count int
 	var timerValue int = 50
 
-	rose.OnTimerEvent(func(e *ui.TimerEvent) {
+	rose.OnTimerEvent(func(e *qt5.TimerEvent) {
 		if e.TimerId() == timerid {
 			draw(imgPainter)
 			rose.Update()
@@ -92,11 +92,11 @@ func ui_main() {
 			w.SetWindowTitle(fmt.Sprintf("Rose: %d*1e4", count))
 		}
 	})
-	rose.OnPaintEvent(func(e *ui.PaintEvent) {
-		painter := ui.NewPainter()
+	rose.OnPaintEvent(func(e *qt5.PaintEvent) {
+		painter := qt5.NewPainter()
 		defer painter.Close()
 		painter.Begin(rose)
-		painter.DrawImageEx(ui.Point{0, 0}, img, img.Rect())
+		painter.DrawImageEx(qt5.Point{0, 0}, img, img.Rect())
 		painter.End()
 	})
 
@@ -116,25 +116,25 @@ func ui_main() {
 		timerid = -1
 	}
 
-	vbox := ui.NewVBoxLayout()
+	vbox := qt5.NewVBoxLayout()
 
-	hbox := ui.NewHBoxLayout()
+	hbox := qt5.NewHBoxLayout()
 	vbox.AddWidget(rose)
 	vbox.AddLayout(hbox)
 
-	loadBtn := ui.NewButtonWithText("Reload")
-	stopBtn := ui.NewButtonWithText("Stop")
-	exitBtn := ui.NewButtonWithText("Exit")
-	timerLabel := ui.NewLabelWithText("Timer: 50 ")
-	timerSlider := ui.NewSlider()
+	loadBtn := qt5.NewButtonWithText("Reload")
+	stopBtn := qt5.NewButtonWithText("Stop")
+	exitBtn := qt5.NewButtonWithText("Exit")
+	timerLabel := qt5.NewLabelWithText("Timer: 50 ")
+	timerSlider := qt5.NewSlider()
 	timerSlider.SetRange(1, 600)
 	timerSlider.SetValue(50)
 	timerSlider.OnValueChanged(func(v int) {
 		timerValue = v
 		timerLabel.SetText(fmt.Sprintf("Timer:%4d ", v))
 	})
-	maxLabel := ui.NewLabelWithText("Max: 1024 ")
-	maxSlider := ui.NewSlider()
+	maxLabel := qt5.NewLabelWithText("Max: 1024 ")
+	maxSlider := qt5.NewSlider()
 	maxSlider.SetRange(10, 10240)
 	maxSlider.SetValue(1024)
 	maxSlider.OnValueChanged(func(v int) {
@@ -161,13 +161,13 @@ func ui_main() {
 	w.SetLayout(vbox)
 	w.Show()
 
-	w.OnCloseEvent(func(e *ui.CloseEvent) {
+	w.OnCloseEvent(func(e *qt5.CloseEvent) {
 		rose.KillTimer(timerid)
 	})
 
 	load()
 
-	ui.Run()
+	qt5.Run()
 }
 
 func sel(b bool, v1, v2 float64) float64 {
@@ -218,7 +218,7 @@ func rgb(r, g, b int64) uint {
 	return uint(r%256*256*256 + g%256*256 + b)
 }
 
-func draw(painter *ui.Painter) {
+func draw(painter *qt5.Painter) {
 	for i := 0; i < 1e4; i++ {
 		s := p(R(), R(), float64(i%46)/.74)
 		if s != nil {
@@ -230,7 +230,7 @@ func draw(painter *ui.Painter) {
 			if v, ok := m[q]; !ok || (v > z) {
 				m[q] = z
 				clr := rgb(^int64(s[3]*h), ^int64(s[4]*h), ^int64(s[3]*s[3]*-80))
-				painter.FillRectF(ui.RcF(x, y, 1, 1), uint(clr))
+				painter.FillRectF(qt5.RcF(x, y, 1, 1), uint(clr))
 			}
 		}
 	}

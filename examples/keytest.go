@@ -2,36 +2,36 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 )
 
 func printInfo() {
-	info := ui.Value("info")
+	info := qt5.Value("info")
 	fmt.Println(info)
 }
 
 func setInfo() {
-	ui.SetValue("info", "new info")
+	qt5.SetValue("info", "new info")
 }
 
 func main() {
-	ui.Main(ui_main)
+	qt5.Main(ui_main)
 }
 
 func ui_main() {
 
-	w := ui.NewWidget()
+	w := qt5.NewWidget()
 
-	lbox := ui.NewVBoxLayout()
-	lbl1 := ui.NewLabel()
+	lbox := qt5.NewVBoxLayout()
+	lbl1 := qt5.NewLabel()
 	lbl1.SetText("This is a info1")
-	lbl2 := ui.NewLabel()
+	lbl2 := qt5.NewLabel()
 	lbl2.SetText("This is a info2")
 
-	ed1 := ui.NewLineEdit()
+	ed1 := qt5.NewLineEdit()
 
 	printInfo := func() {
-		info := ui.Value("info")
+		info := qt5.Value("info")
 		ed1.SetText(fmt.Sprint(info))
 	}
 
@@ -39,15 +39,15 @@ func ui_main() {
 	lbox.AddWidget(lbl2)
 	lbox.AddWidget(ed1)
 
-	rbox := ui.NewVBoxLayout()
+	rbox := qt5.NewVBoxLayout()
 
-	btn1 := ui.NewButton()
+	btn1 := qt5.NewButton()
 	btn1.SetText("Change")
 
-	btn2 := ui.NewButton()
+	btn2 := qt5.NewButton()
 	btn2.SetText("Value")
 
-	btn3 := ui.NewButton()
+	btn3 := qt5.NewButton()
 	btn3.SetText("SetValue")
 
 	rbox.AddWidget(btn1)
@@ -58,10 +58,10 @@ func ui_main() {
 	btn1.OnClicked(func() {
 		var text string
 		if b {
-			ui.SetKey(lbl1, "info", "text")
+			qt5.SetKey(lbl1, "info", "text")
 			text = "info1"
 		} else {
-			ui.SetKey(lbl2, "info", "text")
+			qt5.SetKey(lbl2, "info", "text")
 			text = "info2"
 		}
 		b = !b
@@ -71,7 +71,7 @@ func ui_main() {
 	btn2.OnClicked(printInfo)
 	btn3.OnClicked(setInfo)
 
-	hbox := ui.NewHBoxLayout()
+	hbox := qt5.NewHBoxLayout()
 	hbox.AddLayout(lbox)
 	hbox.AddLayout(rbox)
 
@@ -79,5 +79,5 @@ func ui_main() {
 
 	w.Show()
 
-	ui.Run()
+	qt5.Run()
 }

@@ -10,7 +10,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # Lesser General Public License for more details.
 
-TARGET = qtdrv
+TARGET = goqt5drv
 TEMPLATE = lib
 
 DEFINES += QTDRV_LIBRARY
@@ -38,7 +38,7 @@ symbian {
     TARGET.UID3 = 0xE1B1CE15
     TARGET.CAPABILITY = 
     TARGET.EPOCALLOWDLLDATA = 1
-    addFiles.sources = qtdrv.dll
+    addFiles.sources = goqt5drv.dll
     addFiles.path = !:/sys/bin
     DEPLOYMENT += addFiles
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 	"image/color"
 )
 
@@ -21,28 +21,28 @@ func make_rgba(c color.Color) rgba {
 }
 
 func main() {
-	ui.Main(func() {
-		w := ui.NewWidget()
+	qt5.Main(func() {
+		w := qt5.NewWidget()
 
-		w.OnPaintEvent(func(e *ui.PaintEvent) {
-			paint := ui.NewPainter()
+		w.OnPaintEvent(func(e *qt5.PaintEvent) {
+			paint := qt5.NewPainter()
 			defer paint.Close()
 			paint.Begin(w)
-			pen := ui.NewPen()
+			pen := qt5.NewPen()
 			pen.SetColor(color.RGBA{255, 128, 0, 0})
 			pen.SetWidth(2)
 			fmt.Println(pen, pen.Color(), pen.Width())
 			paint.SetPen(pen)
-			brush := ui.NewBrush()
-			brush.SetStyle(ui.SolidPattern)
+			brush := qt5.NewBrush()
+			brush.SetStyle(qt5.SolidPattern)
 			brush.SetColor(color.RGBA{128, 128, 0, 255})
 			paint.SetBrush(brush)
-			paint.DrawRect(ui.Rect{10, 10, 100, 100})
+			paint.DrawRect(qt5.Rect{10, 10, 100, 100})
 		})
 
-		w.SetSize(ui.Size{400, 400})
+		w.SetSize(qt5.Size{400, 400})
 		w.Show()
 
-		ui.Run()
+		qt5.Run()
 	})
 }

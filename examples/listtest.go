@@ -2,34 +2,34 @@ package main
 
 import (
 	"fmt"
-	"github.com/visualfc/go-ui/ui"
+	"github.com/salviati/go-qt5/qt5"
 )
 
 func main() {
-	ui.Main(ui_main)
+	qt5.Main(ui_main)
 }
 
 func ui_main() {
-	w := ui.NewWidget()
+	w := qt5.NewWidget()
 	defer w.Close()
-	list := ui.NewListWidget()
-	vbox := ui.NewVBoxLayout()
+	list := qt5.NewListWidget()
+	vbox := qt5.NewVBoxLayout()
 	vbox.AddWidget(list)
 	w.SetLayout(vbox)
 	go func() {
-		list.OnCurrentItemChanged(func(item, old *ui.ListWidgetItem) {
+		list.OnCurrentItemChanged(func(item, old *qt5.ListWidgetItem) {
 			go func() {
 				fmt.Println(item.Attr("text"))
 			}()
 		})
 
-		item := ui.NewListWidgetItem()
+		item := qt5.NewListWidgetItem()
 		item.SetText("Item1")
 		list.AddItem(item)
-		list.AddItem(ui.NewListWidgetItemWithText("Item2"))
+		list.AddItem(qt5.NewListWidgetItemWithText("Item2"))
 	}()
 
 	w.Show()
 
-	ui.Run()
+	qt5.Run()
 }

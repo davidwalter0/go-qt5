@@ -2,14 +2,19 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package ui
+package qt5
+
+const (
+	name = "go-qt5"
+	version = "0.1.1"
+)
 
 func About() string {
-	return "go-ui 0.1.1 <visualfc@gmail.com>"
+	return name + " " + version
 }
 
 func Version() string {
-	return "go-ui 0.1.1"
+	return version
 }
 
 func Main(fn func()) int {
