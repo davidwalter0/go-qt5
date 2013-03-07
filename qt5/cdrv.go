@@ -33,7 +33,7 @@ static void init_utf8_info(int classid, int drvid)
 }
 
 */
-// #cgo LDFLAGS: -L../lib -lgoqt5drv
+// #cgo LDFLAGS: -lgoqt5drv
 import "C"
 import "unsafe"
 import "fmt"

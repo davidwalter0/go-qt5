@@ -1,41 +1,39 @@
-#go-qt5 0.1.1
+#go-qt5
 =====
 
 ##Introduction
-go-qt5 is a cross-platform golang ui tool kit, based on qt5.
+go-qt5 is provides with qt5 bindings for Go programming language, based on visualfc's go-ui library.
 
 Lua code that generates the wrappers (`uiobjs.go` and `cdrv.cpp`) can be found under `make`.
 
-The wrapper code is by far incomplete. Adding new functionality usually consists of editing or adding files under `make/qt5`, and updating `make/make.lua` script, and making relevant changes in `qt5` and `qtdrv`.
+The wrapper code is by far incomplete, so pull requests are more than welcome. Adding new functionality usually consists of editing or adding files under `make/qt5`, and updating `make/make.lua` script, and making relevant changes in `qt5` and `qtdrv`.
 
-##System
-Windows / Linux / MacOS X
 
 ##License
-    go-qt5 lib BSD
-    qtdrv lib LGPL
+	go-qt5 lib BSD
+	qtdrv lib LGPL
 
-##Build go-qt5 and examples
+##Using go-qt5
 
-###1.get go-qt5
-    $ go get github.com/salviati/go-qt5
-###2.build qtdrv, need install QtSDK
-    $ cd go-qt5/qtdrv
-    $ qmake "CONFIG+=release"
-    $ make
+###1. get & install go-qt5
+	$ go get github.com/salviati/go-qt5
+###2. build & install C layer
+	$ cd $GOPATH/src/salviati/go-qt5/qtdrv
+	$ qmake "CONFIG+=release"
+	$ make
+	# make install
 ###3.build go-qt5
-    $ cd go-qt5/qt5
-    $ go install
+	$ cd $GOPATH/src/salviati/go-qt5/qt5
+	$ go install
 ###4.build examples
-    $ cd go-qt5/examples
-    $ go build -ldflags '-r ../lib' minimal.go
-    $ ./minimal
+	$ cd $GOPATH/src/salviati/go-qt5/examples
+	$ go run minimal.go
 
-##Examples
+##A minimal example
 
-    package main
+	package main
 
-    import (
+	import (
 	    "github.com/salviati/go-qt5/qt5"
     )
     
@@ -49,5 +47,3 @@ Windows / Linux / MacOS X
 		    qt5.Run()
 	    })
     }
-
-
