@@ -61,6 +61,7 @@ RemoveAction(act *Action)
 * OnMouseReleaseEvent(fn func(*MouseEvent))
 * OnMouseMoveEvent(fn func(*MouseEvent))
 * OnMouseDoubleClickEvent(fn func(*MouseEvent))
+* OnWheelEvent(fn func(*WheelEvent))
 * OnMoveEvent(fn func(*MoveEvent))
 * OnPaintEvent(fn func(*PaintEvent))
 * OnResizeEvent(fn func(*ResizeEvent))
@@ -150,7 +151,7 @@ SetFixedSize = "setFixedSize",
 SetGeometry = "setGeometry",
 Geometry = "geometry",
 SetFont = "setFont",
-Font = "font", 
+Font = "font",
 SetToolTip = "setToolTip",
 ToolTip = "toolTip",
 SetUpdatesEnabled = "setUpdatesEnabled",
@@ -203,6 +204,10 @@ drvNewEvent(QEvent::MouseMove,a0,a1,a2);
 
 OnMouseDoubleClickEvent = [[
 drvNewEvent(QEvent::MouseButtonDblClick,a0,a1,a2);
+]],
+
+OnWheelEvent = [[
+drvNewEvent(QEvent::Wheel,a0,a1,a2);
 ]],
 
 OnMoveEvent = [[
