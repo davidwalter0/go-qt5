@@ -2454,7 +2454,7 @@ int drv_boxlayout(int drvid, void *a0, void* a1, void* a2, void* a3, void* a4, v
         switch (drvGetInt(a1)) {
         	case Qt::Horizontal: {
         		self->setDirection(QBoxLayout::TopToBottom);
-        		break;		
+        		break;
         	}
         	case Qt::Vertical: {
         		self->setDirection(QBoxLayout::LeftToRight);
@@ -4116,7 +4116,7 @@ int drv_appmain()
 	return pfn_drv_appmain();
 }
 
-void utf8_info_copy(void *info, const char *data, int size)
+void utf8_info_copy(void *info, const char *data, goInt size)
 {
     pfn_utf8_info_copy(info,data,size);
 }
@@ -4142,7 +4142,7 @@ int drv(int drvcls, int drvid, void *exp, void *a0, void* a1, void* a2, void* a3
         QMetaObject::invokeMethod(theApp,"drv",
                                   Q_ARG(int,drvcls),
                                   Q_ARG(int,drvid),
-                                  Q_ARG(void*,exp),							  
+                                  Q_ARG(void*,exp),
                                   Q_ARG(void*,a0),
                                   Q_ARG(void*,a1),
                                   Q_ARG(void*,a2),

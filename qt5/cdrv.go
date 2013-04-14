@@ -310,9 +310,9 @@ func nativeToObject(native uintptr, classid int) interface{} {
 }
 
 //export drv_result
-func drv_result(ch unsafe.Pointer, r int) int {
+func drv_result(ch unsafe.Pointer, r int32) int32 {
 	go func() {
-		*(*chan int)(ch) <- r
+		*(*chan int)(ch) <- int(r)
 	}()
 	return 0
 }
@@ -331,7 +331,7 @@ func drv_appmain() {
 }
 
 //export drv_callback
-func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int {
+func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int32 {
 	fn, ok := func_map[pfn]
 	if !ok {
 		return 0

@@ -42,30 +42,42 @@ class QLayout;
 class QStatusBar;
 class QListWidgetItem;
 
+#include <stdint.h>
+#if UINTPTR_MAX == 0xffffffff
+// 32 bit build
+typedef int32_t goInt;
+typedef uint32_t goUint;
+#else
+// 64 bit build
+typedef int64_t goInt;
+typedef uint64_t goUint;
+#endif
+typedef uint8_t goBool;
+
 
 #define drvInvalid (void*)-1
 
-void utf8_info_copy(void*,const char*,int);
+void utf8_info_copy(void*,const char*,goInt);
 
 struct handle_head {
     void *native;
-    int   classid;
+    goInt classid;
 };
 
 struct string_head {
     char *data;
-    int len;
+    goInt len;
 };
 
 struct slice_head {
     const char *data;
-    int len;
-    int cap;
+    goInt len;
+    goInt cap;
 };
 
 struct point_head {
-    int x;
-    int y;
+    goInt x;
+    goInt y;
 };
 
 struct pointf_head {
@@ -74,8 +86,8 @@ struct pointf_head {
 };
 
 struct size_head {
-    int width;
-    int hegiht;
+    goInt width;
+    goInt hegiht;
 };
 
 struct sizef_head {
@@ -84,10 +96,10 @@ struct sizef_head {
 };
 
 struct rect_head {
-    int x;
-    int y;
-    int width;
-    int height;
+    goInt x;
+    goInt y;
+    goInt width;
+    goInt height;
 };
 
 struct rectf_head {
@@ -98,10 +110,10 @@ struct rectf_head {
 };
 
 struct margins_head {
-    int left;
-    int top;
-    int right;
-    int bottom;
+    goInt left;
+    goInt top;
+    goInt right;
+    goInt bottom;
 };
 
 struct color_head {
@@ -126,7 +138,7 @@ inline void drvSetString(void *param, const QString &s)
 {
     if (param == 0) {
         return;
-    }    
+    }
     const QByteArray & ar = s.toUtf8();
     utf8_info_copy(param,ar.constData(),ar.length());
     /*
@@ -282,82 +294,82 @@ inline void drvSetMargins(void *param, const QMargins &mr)
 
 inline bool drvGetBool(void *param)
 {
-    return *(int*)param != 0;
+    return *(goBool*)param != 0;
 }
 
 inline void drvSetBool(void *param, bool b)
 {
-    *(int*)param = b?1:0;
+    *(goBool*)param = b?1:0;
 }
 
 inline int drvGetInt(void *param)
 {
-    return *(int*)param;
+    return *(goInt*)param;
 }
 
 inline int drvGetUint(void *param)
 {
-    return *(uint*)param;
+    return *(goUint*)param;
 }
 
 inline void drvSetInt(void *param, int value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 inline QSystemTrayIcon::MessageIcon drvGetMessageIconType(void *param)
 {
-    return QSystemTrayIcon::MessageIcon(*(int*)param);
+    return QSystemTrayIcon::MessageIcon(*(goInt*)param);
 }
 
 inline Qt::Alignment drvGetAlignment(void *param)
 {
-    return (Qt::Alignment)(*(int*)param);
+    return (Qt::Alignment)(*(goInt*)param);
 }
 
 inline void drvSetAlignment(void *param,Qt::Alignment value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 inline Qt::Orientation drvGetOrientation(void *param)
 {
-    return (Qt::Orientation)(*(int*)param);
+    return (Qt::Orientation)(*(goInt*)param);
 }
 
 inline void drvSetOrientation(void *param, Qt::Orientation value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 inline QSlider::TickPosition drvGetTickPosition(void *param)
 {
-    return (QSlider::TickPosition)(*(int*)param);
+    return (QSlider::TickPosition)(*(goInt*)param);
 }
 
 inline void drvSetTickPosition(void *param, QSlider::TickPosition value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 inline Qt::ToolButtonStyle drvGetToolButtonStyle(void *param)
 {
-    return (Qt::ToolButtonStyle)(*(int*)param);
+    return (Qt::ToolButtonStyle)(*(goInt*)param);
 }
 
 inline void drvSetToolButtonStyle(void *param, Qt::ToolButtonStyle value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 inline QToolButton::ToolButtonPopupMode drvGetToolButtonPopupMode(void *param)
 {
-    return (QToolButton::ToolButtonPopupMode)(*(int*)param);
+    return (QToolButton::ToolButtonPopupMode)(*(goInt*)param);
 }
 
 inline void drvSetToolButtonPopupMode(void *param, QToolButton::ToolButtonPopupMode value)
 {
-    *(int*)param = value;
+    *(goInt*)param = value;
 }
 
 
@@ -383,7 +395,7 @@ inline void* drvGetNative(void *param)
 {
     if (param == 0) {
         return 0;
-    }    
+    }
     return ((handle_head*)param)->native;
 }
 
@@ -606,7 +618,7 @@ inline void drvDelObj(void *a0, T *obj)
     if (a0 == 0) {
         return;
     }
-    
+
     handle_head *head =(handle_head*)a0;
     if (head->native == 0 || head->native == drvInvalid) {
         return;
@@ -688,12 +700,12 @@ int _drv(int drvclass, int drvid, void *a0, void* a1, void* a2, void* a3, void* 
 
 inline Qt::AspectRatioMode drvGetAspectRatioMode(void *param)
 {
-	return (Qt::AspectRatioMode)(*(int*)param);
+	return (Qt::AspectRatioMode)(*(goInt*)param);
 }
 
 inline Qt::TransformationMode drvGetTransformationMode(void *param)
 {
-	return (Qt::TransformationMode)(*(int*)param);
+	return (Qt::TransformationMode)(*(goInt*)param);
 }
 
 inline QSizePolicy::Policy drvGetSizePolicyPolicy(void *param)
@@ -702,7 +714,7 @@ inline QSizePolicy::Policy drvGetSizePolicyPolicy(void *param)
 		return QSizePolicy::Fixed;
 	}
 
-	return (QSizePolicy::Policy)(*(int*)param);
+	return (QSizePolicy::Policy)(*(goInt*)param);
 }
 
 inline void drvSetSizePolicyPolicy(void *param, QSizePolicy::Policy policy)
@@ -711,7 +723,7 @@ inline void drvSetSizePolicyPolicy(void *param, QSizePolicy::Policy policy)
 		return;
 	}
 
-	(*(int*)param) = (int)policy;
+	(*(goInt*)param) = (int)policy;
 }
 
 inline QSizePolicy::ControlType drvGetSizePolicyControlType(void *param)
@@ -720,7 +732,7 @@ inline QSizePolicy::ControlType drvGetSizePolicyControlType(void *param)
 		return QSizePolicy::DefaultType;
 	}
 
-	return (QSizePolicy::ControlType)(*(int*)param);
+	return (QSizePolicy::ControlType)(*(goInt*)param);
 }
 
 inline void drvSetSizePolicyControlType(void *param, QSizePolicy::ControlType control)
@@ -729,7 +741,7 @@ inline void drvSetSizePolicyControlType(void *param, QSizePolicy::ControlType co
 		return;
 	}
 
-	(*(int*)param) = (int)control;
+	(*(goInt*)param) = (int)control;
 }
 
 inline void drvSetSizePolicy(void *param, const QSizePolicy &p) // FIXME
