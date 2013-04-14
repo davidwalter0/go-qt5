@@ -67,6 +67,7 @@ struct handle_head {
 struct string_head {
     char *data;
     goInt len;
+    goInt cap; // This is due to being mapped to utf8_info, so we need to make sure we've got enough space
 };
 
 struct slice_head {
@@ -140,13 +141,8 @@ inline void drvSetString(void *param, const QString &s)
         return;
     }
     const QByteArray & ar = s.toUtf8();
+    // It's done this way to make sure the content isn't collected by the GO GC.
     utf8_info_copy(param,ar.constData(),ar.length());
-    /*
-    string_head *sh = (string_head*)param;
-    sh->data = new char[ar.length()];
-    memcpy(sh->data,ar.constData(),ar.length());
-    sh->len = ar.length();
-    */
 }
 
 inline QColor drvGetColor(void *param)

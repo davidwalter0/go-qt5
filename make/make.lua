@@ -1,4 +1,4 @@
---[[ 
+--[[
 // Copyright 2012 visualfc <visualfc@gmail.com>. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -75,12 +75,12 @@ function make()
 	begin_def()
 		def(app)
 		def(timer)
-		
+
 		def(font)
 		def(pixmap)
-		def(icon)	
-		def(image)	
-		
+		def(icon)
+		def(image)
+
 		def(widget)
 
 		def(action)
@@ -90,7 +90,7 @@ function make()
 		def(toolbar)
 		def(statusbar)
 		def(dockwidget)
-		
+
 		def(systemtray)
 
 		def(tabwidget)
@@ -115,7 +115,7 @@ function make()
 
 		def(combobox)
 		def(lineedit)
-		
+
 		def(baseslider)
 		def(slider)
 		def(scrollbar)
@@ -124,20 +124,20 @@ function make()
 		def(brush)
 		def(pen)
 		def(painter)
-		
+
 		def(listwidgetitem)
 		def(listwidget)
-		
+
 		def(mainwindow)
-		
+
 		def(glwidget)
 		def(sizepolicy)
 		def(basescrollarea)
 		def(scrollarea)
-		
+
 	end_def()
 
-	local ui = io.open("../ui/uiobjs.go","w")
+	local ui = io.open("../qt5/uiobjs.go","w")
 	ui:write(table.concat(go_def.heads,"\n"))
 	ui:write("\n")
 	ui:write(table.concat(go_def.drvenum,"\n"))
@@ -150,7 +150,7 @@ function make()
 	ui:write("\n")
 	ui:close()
 
-	local cdrv = io.open(string.format("../%s/cdrv.cpp",cdrv_type),"w")
+	local cdrv = io.open("../goqtdrv5/cdrv.cpp","w")
 	cdrv:write(table.concat(c_def.heads,"\n"))
 	cdrv:write("\n")
 	cdrv:write(table.concat(c_def.include,"\n"))

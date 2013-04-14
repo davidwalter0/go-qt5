@@ -1,4 +1,4 @@
---[[ 
+--[[
 // Copyright 2012 visualfc <visualfc@gmail.com>. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -123,7 +123,7 @@ function begin_def()
 	c_def._drvfunc = {}
 	c_def.enums = {}
 	c_def.funcs = {}
-	
+
 	go_def.heads[#go_def.heads+1] = [[
 // Copyright 2012 visualfc <visualfc@gmail.com>. All rights reserved.
 // Use of this source code is governed by a BSD-style
@@ -146,7 +146,7 @@ function begin_def()
 ]]
 
 	go_def.heads[#go_def.heads+1] = [[
-package ui
+package qt5
 
 import (
 	"runtime"
@@ -161,7 +161,7 @@ func registerAllClass() {
 	go_def.drvenum[#go_def.drvenum+1] = "// drvclass enums"
 	go_def.drvenum[#go_def.drvenum+1] = "const ("
 	go_def.drvenum[#go_def.drvenum+1] = "\tCLASSID_NONE = iota"
-	
+
 	c_def.drvenum[#c_def.drvenum+1] = "// drvclass enums"
 	c_def.drvenum[#c_def.drvenum+1] = "enum DRVCLASS_ENUM {"
 	c_def.drvenum[#c_def.drvenum+1] = "    DRVCLASS_NONE = 0,"
@@ -193,7 +193,7 @@ int drv_appmain()
 	return pfn_drv_appmain();
 }
 
-void utf8_info_copy(void *info, const char *data, int size)
+void utf8_info_copy(void *info, const char *data, goInt size)
 {
     pfn_utf8_info_copy(info,data,size);
 }
@@ -230,7 +230,7 @@ function end_def()
         QMetaObject::invokeMethod(theApp,"drv",
                                   Q_ARG(int,drvcls),
                                   Q_ARG(int,drvid),
-                                  Q_ARG(void*,exp),							  
+                                  Q_ARG(void*,exp),
                                   Q_ARG(void*,a0),
                                   Q_ARG(void*,a1),
                                   Q_ARG(void*,a2),
@@ -262,7 +262,7 @@ function def(item)
 	if string.sub(name,1,1) == string.upper(string.sub(name,1,1)) then
 		export = true
 	end
-	
+
 	if export then
 		name_cls = "CLASSID_"..string.upper(name)
 	else
@@ -280,7 +280,7 @@ function def(item)
 		cdrv.name = cdrv_name
 		cself = "self->"
 	end
-	
+
 	go.enums = {}
 	go.defs = {}
 	go.funcs = {}
@@ -290,7 +290,7 @@ function def(item)
 	c.enums = {}
 	c.funcs = {}
 
-	go_def.drvenum[#go_def.drvenum+1] = "\t"..name_cls	
+	go_def.drvenum[#go_def.drvenum+1] = "\t"..name_cls
 	c_def.drvenum[#c_def.drvenum+1] = "    "..name_cls..","
 
 	go.enums[#go.enums+1] = string.format("// %s drvid enums",name_cls)
@@ -315,10 +315,10 @@ int drv_%s(int drvid, void *a0, void* a1, void* a2, void* a3, void* a4, void* a5
 	end
 
 	c.funcs[#c.funcs+1] = "    switch (drvid) {"
-	
+
 	local comment = string.format([[
 // struct %s
-//]],name)	
+//]],name)
 	if item.comment ~= nil then
 		comment = comment .. "\n" .. get_comment(item.comment)
 	end
@@ -345,7 +345,7 @@ func (p *%s) SetAttr(attr string, value interface{}) bool {
 	go.getattr[#go.getattr+1] = string.format([[
 func (p *%s) Attr(attr string) interface{} {
 	switch attr {]],name)
-	
+
 	if item.defs ~= nil then
 		go.defs[#go.defs+1] = item.defs
 	end
@@ -398,7 +398,7 @@ func (p *%s) Attr(attr string) interface{} {
 			else
 				go_var_ex[#go_var_ex+1] = "unsafe.Pointer(&"..var..")"
 			end
-			
+
 			local c_type = "drvGet"..string.upper(string.sub(_c_type,1,1))..string.sub(_c_type,2,-1)
 			if type == "iobj" then
 				c_type = "drvGetNative"
@@ -410,7 +410,7 @@ func (p *%s) Attr(attr string) interface{} {
 				c_type = "drvGetColor"
 			end
 			c_in[#c_in+1] = c_type
-		end				
+		end
 		for k,v in pairs(v.output) do
 			index = index+1
 			local var = v.var
@@ -419,25 +419,21 @@ func (p *%s) Attr(attr string) interface{} {
 			local ptr,typ = string.match(type,"(%*)%s*(%w+)")
 			if ptr ~= nil then
 				_c_type = typ
-			end			
-			local c_type = "drvSet"..string.upper(string.sub(_c_type,1,1))..string.sub(_c_type,2,-1)			
+			end
+			local c_type = "drvSet"..string.upper(string.sub(_c_type,1,1))..string.sub(_c_type,2,-1)
 			go_out[#go_out+1] = var.." "..type
 			go_out_type = type
 			if type == "string" then
 				var = "sh_"..var
 				go_body1[#go_body1+1] = string.format("\tvar %s utf8_info",var)
 				go_body2[#go_body2+1] = string.format("\t%s = %s.String()",v.var,var)
-			elseif type == "bool" then
-				var = "b_"..var
-				go_body1[#go_body1+1] = string.format("\tvar %s int",var)
-				go_body2[#go_body2+1] = string.format("\t%s = %s != 0",v.var,var)
 			elseif type == "color.Color" then
 				var = "sh_"..var
 				go_body1[#go_body1+1] = string.format("\tvar %s rgba",var)
-				go_body2[#go_body2+1] = string.format("\t%s = %s",v.var,var)				
+				go_body2[#go_body2+1] = string.format("\t%s = %s",v.var,var)
 				c_type = "drvSetColor"
-			elseif type == "IObject" or 
-				   type == "IWidget" or 
+			elseif type == "IObject" or
+				   type == "IWidget" or
 				   type == "ILayout" then
 				var = "oi_"..var
 				go_body1[#go_body1+1] = string.format("\tvar %s obj_info",var)
@@ -461,7 +457,7 @@ func (p *%s) Attr(attr string) interface{} {
 		}
 		if v != nil {
 			%s = v.(%s)
-		} 
+		}
 	}]],var,var,id,var,v.var,v.type)
 			end
 			go_var[#go_var+1] = "&"..var
@@ -479,8 +475,8 @@ func (p *%s) Attr(attr string) interface{} {
 				go_var_ex[#go_var_ex+1] = "unsafe.Pointer("..var..")"
 			else
 				go_var_ex[#go_var_ex+1] = "unsafe.Pointer(&"..var..")"
-			end			
-			
+			end
+
 			c_out[#c_out+1] = c_type
 		end
 
@@ -508,7 +504,7 @@ func (p *%s) Attr(attr string) interface{} {
 				go_def.newobj[#go_def.newobj+1] = string.format([[
 	RegisterClass(%q,%s,func() IObject {
 		return New%s()
-	})]],name,name_cls,name)	
+	})]],name,name_cls,name)
 				go_def.newobj[#go_def.newobj+1] = string.format([[
 	RegisterClassNative(%s,func(native uintptr) IObject {
 		obj := new(%s)
@@ -516,7 +512,7 @@ func (p *%s) Attr(attr string) interface{} {
 		obj.native = native
 		InsertObject(obj)
 		return obj
-	})]],name_cls,name,name_cls,name)		
+	})]],name_cls,name,name_cls,name)
 			end
 		elseif tag == "-" then
 			-- "delete"
@@ -525,10 +521,10 @@ func (p *%s) Attr(attr string) interface{} {
 				go_body1[#go_body1+1] = [[
 	if p == nil || p.native == 0 {
 		return
-	}]]		
+	}]]
 				go_body2[#go_body2+1] = [[
 	p.native = 0
-	runtime.SetFinalizer(p,nil)]]					
+	runtime.SetFinalizer(p,nil)]]
 			else
 			go_body1[#go_body1+1] = [[
 	if p == nil || p.native == 0 {
@@ -570,7 +566,7 @@ func (p *%s) Attr(attr string) interface{} {
 		else
 			-- "func"
 		end
-		
+
 		if tag == "*" then
 			if name == "app" then
 				go_body = string.format("\t_drv_event(%s,%s,p",name_cls,enum)
@@ -579,21 +575,21 @@ func (p *%s) Attr(attr string) interface{} {
 			end
 		elseif name == "app" then
 			go_body = string.format("\t_drv(%s,%s,unsafe.Pointer(p.info())",name_cls,enum)
-		else	
+		else
 			go_body = string.format("\t_drv_ch(%s,%s,unsafe.Pointer(p.info())",name_cls,enum)
 		end
 
-		
+
 		while #go_var_ex < 9 do
 			go_var_ex[#go_var_ex+1] = "nil"
 		end
-		
+
 		if tag == "*" then
 			go_body = go_body..","..table.concat(go_var,",")
-		else					
+		else
 			go_body = go_body..","..table.concat(go_var_ex,",")
 		end
-								
+
 		go_body = go_body..")"
 
 		local go_func = {}
@@ -619,13 +615,13 @@ func (p *%s) Attr(attr string) interface{} {
 			go.funcs[#go.funcs+1] = table.concat(go_new,"\n").."\n"
 		end
 		go.funcs[#go.funcs+1] = table.concat(go_func,"\n").."\n"
-		--auto make cdrv[func]		
+		--auto make cdrv[func]
 		if cdrv[func] == nil then
 			cdrv[func] = cdrv_func_go2c(func)
 		end
 		--assert(cdrv[func] ~= nil,string.format("cdrv <%s> class %s : %s not defined!",cdrv_type,name,func))
 		local cbody = cdrv[func]
-		if string.find(cbody,"[%;%(%)]") == nil then		
+		if string.find(cbody,"[%;%(%)]") == nil then
 			if #c_out == 0 then
 				local c_type = {}
 				for k,v in ipairs(c_in) do
@@ -638,7 +634,7 @@ func (p *%s) Attr(attr string) interface{} {
 					c_type[#c_type+1] = v .. "(a"..k..")"
 				end
 				cbody = c_out[1].."(a"..(#c_in+1)..","..cself..cbody.."("..table.concat(c_type,",").."));"
-			end			
+			end
 		end
 		c.funcs[#c.funcs+1] = string.format([[
     case %s: {]],enum)
@@ -665,14 +661,14 @@ func (p *%s) Attr(attr string) interface{} {
 	}
 	return nil
 }]],base)
-	
+
 	c.enums[#c.enums+1] = "    _ID_"..name_tag.."_LAST"
-	c.enums[#c.enums+1] = "};"	
+	c.enums[#c.enums+1] = "};"
 
 	if item.expands ~= nil then
 		go.funcs[#go.funcs+1] = item.expands
 	end
-	
+
 	c_def.enums[#c_def.enums+1] = table.concat(c.enums,"\n")
 	if cdrv.inc ~= nil then
 		c_def.include[#c_def.include+1] = "#include "..cdrv.inc
@@ -685,7 +681,7 @@ func (p *%s) Attr(attr string) interface{} {
 	go_def.funcs[#go_def.funcs+1] = table.concat(go.setattr,"\n")
 	go_def.funcs[#go_def.funcs+1] = table.concat(go.getattr,"\n")
 	go_def.funcs[#go_def.funcs+1] = table.concat(go.funcs,"\n")
-	
+
 	c.funcs[#c.funcs+1] = [[
     default:
         return 0;
