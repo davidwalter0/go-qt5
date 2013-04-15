@@ -79,193 +79,6 @@ func utf8_info_copy(p unsafe.Pointer, data unsafe.Pointer, size C.int) {
 	((*utf8_info)(p)).data = C.GoBytes(data, size)
 }
 
-func _b(b bool) byte {
-	if b {
-		return 1
-	}
-	return 0
-}
-
-func _p(a interface{}) uintptr {
-	if a == nil {
-		return 0
-	}
-	switch v := a.(type) {
-	case bool:
-		return uintptr(unsafe.Pointer(&v))
-	case uintptr:
-		return uintptr(unsafe.Pointer(&v))
-	case *uintptr:
-		return uintptr(unsafe.Pointer(v))
-	case int:
-		return uintptr(unsafe.Pointer(&v))
-	case *int:
-		return uintptr(unsafe.Pointer(v))
-	case uint:
-		return uintptr(unsafe.Pointer(&v))
-	case *uint:
-		return uintptr(unsafe.Pointer(v))
-	case float32:
-		return uintptr(unsafe.Pointer(&v))
-	case *float32:
-		return uintptr(unsafe.Pointer(v))
-	case float64:
-		return uintptr(unsafe.Pointer(&v))
-	case *float64:
-		return uintptr(unsafe.Pointer(v))
-	case string:
-		return uintptr(unsafe.Pointer((*string_info)(unsafe.Pointer(&v))))
-	case rgba:
-		return uintptr(unsafe.Pointer(&v))
-	case *rgba:
-		return uintptr(unsafe.Pointer(v))
-	case color.Color:
-		clr := make_rgba(v)
-		return uintptr(unsafe.Pointer(&clr))
-	case *utf8_info:
-		return uintptr(unsafe.Pointer(v))
-	case *obj_info:
-		return uintptr(unsafe.Pointer(v))
-	case iobj:
-		return uintptr(unsafe.Pointer(v.info()))
-	case *iobj:
-		return uintptr(unsafe.Pointer((*v).info()))
-	case Point:
-		return uintptr(unsafe.Pointer(&v))
-	case *Point:
-		return uintptr(unsafe.Pointer(v))
-	case PointF:
-		return uintptr(unsafe.Pointer(&v))
-	case *PointF:
-		return uintptr(unsafe.Pointer(v))
-	case Size:
-		return uintptr(unsafe.Pointer(&v))
-	case *Size:
-		return uintptr(unsafe.Pointer(v))
-	case SizeF:
-		return uintptr(unsafe.Pointer(&v))
-	case *SizeF:
-		return uintptr(unsafe.Pointer(v))
-	case Rect:
-		return uintptr(unsafe.Pointer(&v))
-	case *Rect:
-		return uintptr(unsafe.Pointer(v))
-	case RectF:
-		return uintptr(unsafe.Pointer(&v))
-	case *RectF:
-		return uintptr(unsafe.Pointer(v))
-	case Margins:
-		return uintptr(unsafe.Pointer(&v))
-	case *Margins:
-		return uintptr(unsafe.Pointer(v))
-	case []Point:
-		return uintptr(unsafe.Pointer((*slice_info)(unsafe.Pointer(&v))))
-	case []Rect:
-		return uintptr(unsafe.Pointer((*slice_info)(unsafe.Pointer(&v))))
-	case []byte:
-		return uintptr(unsafe.Pointer((*slice_info)(unsafe.Pointer(&v))))
-	case Font:
-		return uintptr(unsafe.Pointer(&v))
-	case *Font:
-		return uintptr(unsafe.Pointer(v))
-	case *Icon:
-		return uintptr(unsafe.Pointer(v))
-	case *Pixmap:
-		return uintptr(unsafe.Pointer(v))
-	case *Image:
-		return uintptr(unsafe.Pointer(v))
-	case *Pen:
-		return uintptr(unsafe.Pointer(v))
-	case *Brush:
-		return uintptr(unsafe.Pointer(v))
-	case MessageIconType:
-		return uintptr(unsafe.Pointer(&v))
-	case Alignment:
-		return uintptr(unsafe.Pointer(&v))
-	case *Alignment:
-		return uintptr(unsafe.Pointer(v))
-	case Orientation:
-		return uintptr(unsafe.Pointer(&v))
-	case *Orientation:
-		return uintptr(unsafe.Pointer(v))
-	case TickPosition:
-		return uintptr(unsafe.Pointer(&v))
-	case *TickPosition:
-		return uintptr(unsafe.Pointer(v))
-	case ToolButtonPopupMode:
-		return uintptr(unsafe.Pointer(&v))
-	case *ToolButtonPopupMode:
-		return uintptr(unsafe.Pointer(v))
-	case ToolButtonStyle:
-		return uintptr(unsafe.Pointer(&v))
-	case *ToolButtonStyle:
-		return uintptr(unsafe.Pointer(v))
-	case DockWidgetArea:
-		return uintptr(unsafe.Pointer(&v))
-	case *DockWidgetArea:
-		return uintptr(unsafe.Pointer(v))
-	case PenStyle:
-		return uintptr(unsafe.Pointer(&v))
-	case *PenStyle:
-		return uintptr(unsafe.Pointer(v))
-	case BrushStyle:
-		return uintptr(unsafe.Pointer(&v))
-	case *BrushStyle:
-		return uintptr(unsafe.Pointer(v))
-	case AspectRatioMode:
-		return uintptr(unsafe.Pointer(&v))
-	case *AspectRatioMode:
-		return uintptr(unsafe.Pointer(v))
-	case TransformationMode:
-		return uintptr(unsafe.Pointer(&v))
-	case *TransformationMode:
-		return uintptr(unsafe.Pointer(v))
-	default:
-		warning("Warning drv, param type \"%s\" not match!", reflect.TypeOf(v))
-	}
-	return 0
-}
-
-//func drv10(id int, act int, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9 uintptr) int {
-//	if id <= _CLASSID_APP {
-//		return int(C.drv(C.int(id), C.int(act), unsafe.Pointer(a0), unsafe.Pointer(a1), unsafe.Pointer(a2), unsafe.Pointer(a3), unsafe.Pointer(a4), unsafe.Pointer(a5), unsafe.Pointer(a6), unsafe.Pointer(a7), unsafe.Pointer(a8), unsafe.Pointer(a9)))
-//	}
-//	ch := make(chan int)
-//	C.drv(C.int(id), C.int(act), unsafe.Pointer(a0), unsafe.Pointer(a1), unsafe.Pointer(a2), unsafe.Pointer(a3), unsafe.Pointer(a4), unsafe.Pointer(a5), unsafe.Pointer(a6), unsafe.Pointer(&ch), unsafe.Pointer(a8), unsafe.Pointer(a9))
-//	<-ch
-//	return 0
-//}
-
-//func drv(id int, act int, a ...interface{}) int {
-//	switch len(a) {
-//	case 0:
-//		return drv10(id, act, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-//	case 1:
-//		return drv10(id, act, _p(a[0]), 0, 0, 0, 0, 0, 0, 0, 0, 0)
-//	case 2:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), 0, 0, 0, 0, 0, 0, 0, 0)
-//	case 3:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), 0, 0, 0, 0, 0, 0, 0)
-//	case 4:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), 0, 0, 0, 0, 0, 0)
-//	case 5:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), 0, 0, 0, 0, 0)
-//	case 6:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), _p(a[5]), 0, 0, 0, 0)
-//	case 7:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), _p(a[5]), _p(a[6]), 0, 0, 0)
-//	case 8:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), _p(a[5]), _p(a[6]), _p(a[7]), 0, 0)
-//	case 9:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), _p(a[5]), _p(a[6]), _p(a[7]), _p(a[9]), 0)
-//	case 10:
-//		return drv10(id, act, _p(a[0]), _p(a[1]), _p(a[2]), _p(a[3]), _p(a[4]), _p(a[5]), _p(a[6]), _p(a[7]), _p(a[9]), _p(a[10]))
-//	default:
-//		panic("drv param count must <= 10")
-//	}
-//	return 0
-//}
-
 func init() {
 	C.init_callback(-1, 0)
 	C.init_result(-2, 0)
@@ -310,9 +123,9 @@ func nativeToObject(native uintptr, classid int) interface{} {
 }
 
 //export drv_result
-func drv_result(ch unsafe.Pointer, r int) int {
+func drv_result(ch unsafe.Pointer, r int32) int32 {
 	go func() {
-		*(*chan int)(ch) <- r
+		*(*chan int)(ch) <- int(r)
 	}()
 	return 0
 }
@@ -331,7 +144,7 @@ func drv_appmain() {
 }
 
 //export drv_callback
-func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int {
+func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int32 {
 	fn, ok := func_map[pfn]
 	if !ok {
 		return 0
@@ -344,7 +157,7 @@ func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int {
 	case func(uint):
 		v(*(*uint)(a1))
 	case func(bool):
-		v(*(*int)(a1) != 0)
+		v(*(*bool)(a1))
 	case func(uintptr):
 		v(uintptr(a1))
 	case func(string):

@@ -15,6 +15,15 @@ TEMPLATE = lib
 
 DEFINES += QTDRV_LIBRARY
 
+# Define how to create version.h
+cdrv.target = cdrv.cpp
+cdrv.commands = cd ../make && lua make.lua
+cdrv.depends = ../make/*.lua ../make/ui/*.lua
+
+QMAKE_EXTRA_TARGETS += cdrv
+
+PRE_TARGETDEPS += cdrv.cpp
+
 SOURCES += cdrv.cpp \
     qtsignal.cpp \
     qtevent.cpp \
@@ -36,7 +45,7 @@ DESTDIR = $$IDE_LIB_PATH
 symbian {
     MMP_RULES += EXPORTUNFROZEN
     TARGET.UID3 = 0xE1B1CE15
-    TARGET.CAPABILITY = 
+    TARGET.CAPABILITY =
     TARGET.EPOCALLOWDLLDATA = 1
     addFiles.sources = goqt5drv.dll
     addFiles.path = !:/sys/bin

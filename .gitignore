@@ -3,6 +3,8 @@
 *.a
 *.so
 *.dll
+qt5/uiobjs.go
+goqtdrv5/cdrv.cpp
 
 # Folders
 _obj

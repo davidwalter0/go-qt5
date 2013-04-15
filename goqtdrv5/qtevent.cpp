@@ -27,55 +27,55 @@
 #include <QDebug>
 
 struct base_event {
-    int accept;
+    goInt accept;
 };
 
 struct timer_event {
-    int accept;
-    int timerid;
+    goInt accept;
+    goInt timerid;
 };
 
 struct move_event {
-    int accept;
-    int x;
-    int y;
-    int ox;
-    int oy;
+    goInt accept;
+    goInt x;
+    goInt y;
+    goInt ox;
+    goInt oy;
 };
 
 struct hover_event {
-    int accept;
-    int x;
-    int y;
-    int ox;
-    int oy;
+    goInt accept;
+    goInt x;
+    goInt y;
+    goInt ox;
+    goInt oy;
 };
 
 struct resize_event {
-    int accept;
-    int w;
-    int h;
-    int ow;
-    int oh;
+    goInt accept;
+    goInt w;
+    goInt h;
+    goInt ow;
+    goInt oh;
 };
 
 struct mouse_event {
-    int accept;
-    int modify;
-    int button;
-    int buttons;
-    int gx;
-    int gy;
-    int x;
-    int y;
+    goInt accept;
+    goInt modify;
+    goInt button;
+    goInt buttons;
+    goInt gx;
+    goInt gy;
+    goInt x;
+    goInt y;
 };
 
 struct key_event {
-    int accept;
-    int modify;
-    int count;
-    int autorepeat;
-    int key;
+    goInt accept;
+    goInt modify;
+    goInt count;
+    goInt autorepeat;
+    goInt key;
     quint32 nativeModifiers;
     quint32 nativeScanCode;
     quint32 nativeVirtualKey;
@@ -83,16 +83,16 @@ struct key_event {
 };
 
 struct paint_event {
-    int accept;
-    int x;
-    int y;
-    int w;
-    int h;
+    goInt accept;
+    goInt x;
+    goInt y;
+    goInt w;
+    goInt h;
 };
 
 struct focus_event {
-    int accept;
-    int reason;
+    goInt accept;
+    goInt reason;
 };
 
 QtEvent::QtEvent(QObject *parent) :

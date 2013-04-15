@@ -32,18 +32,21 @@ void QtSignal::call()
 
 void QtSignal::call(bool b)
 {
-    int i = b ? 1:0;
+    goBool i = b ? 1:0;
     drv_callback(m_func,&i,0,0,0);
 }
 
 void QtSignal::call(int i)
 {
-    drv_callback(m_func,&i,0,0,0);
+    goInt gi = i;
+    drv_callback(m_func,&gi,0,0,0);
 }
 
 void QtSignal::call(int i, int j)
 {
-    drv_callback(m_func,&i,&j,0,0);
+    goInt gi = i;
+    goInt gj = j;
+    drv_callback(m_func,&gi,&gj,0,0);
 }
 
 void QtSignal::call(const QString& s)
