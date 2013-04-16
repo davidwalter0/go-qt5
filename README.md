@@ -15,17 +15,21 @@ The wrapper code is by far incomplete, so pull requests are more than welcome. A
 
 ##Using go-qt5
 
-###1. get & install go-qt5
+###1. get go-qt5
 	$ go get github.com/salviati/go-qt5
-###2. build & install C layer
+###2. generate bindings
+	$ cd $GOPATH/src/github.com/salviati/go-qt5/make
+	$ lua make.lua
+	$ lua makelib.lua
+###3. build & install C layer
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/qtdrv
 	$ qmake "CONFIG+=release"
 	$ make
 	# make install
-###3.build go-qt5
+###4.build go-qt5
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/qt5
 	$ go install
-###4.build examples
+###5.build examples
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/examples
 	$ go run minimal.go
 
