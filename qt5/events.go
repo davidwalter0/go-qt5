@@ -125,6 +125,15 @@ func (p *MouseEvent) Pos() Point {
 	return Pt(p.x, p.y)
 }
 
+type WheelEvent struct {
+	MouseEvent
+	orientation int
+}
+
+func (p *WheelEvent) Orientation() int {
+	return p.orientation
+}
+
 type PaintEvent struct {
 	BaseEvent
 	x, y int

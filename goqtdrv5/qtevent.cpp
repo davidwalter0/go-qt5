@@ -95,6 +95,19 @@ struct focus_event {
     goInt reason;
 };
 
+struct wheel_event {
+    int accept;
+    int modify;
+    int orientation;
+    int buttons;
+    int gx;
+    int gy;
+    int x;
+    int y;
+    int delta;
+    //int pos;
+};
+
 QtEvent::QtEvent(QObject *parent) :
     QObject(parent)
 {
@@ -193,6 +206,15 @@ bool QtEvent::eventFilter(QObject *target, QEvent *event)
             QPaintEvent *e = (QPaintEvent*)event;
             const QRect &rc = e->rect();
             paint_event ev = {accept,rc.x(),rc.y(),rc.width(),rc.height()};
+            drv_callback(func,&ev,0,0,0);
+            event->setAccepted(ev.accept != 0);
+            break;
+        }
+        case QEvent::Wheel: {
+            QWheelEvent *e = (QWheelEvent*)event;
+            const QPoint &gpt = e->globalPos();
+            const QPoint &pt = e->pos();
+            wheel_event ev = {accept,e->modifiers(),e->orientation(),e->buttons(),gpt.x(),gpt.y(),pt.x(),pt.y(),e->delta()};
             drv_callback(func,&ev,0,0,0);
             event->setAccepted(ev.accept != 0);
             break;

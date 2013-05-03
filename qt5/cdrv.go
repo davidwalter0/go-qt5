@@ -198,6 +198,8 @@ func drv_callback(pfn unsafe.Pointer, a1, a2, a3, a4 unsafe.Pointer) int32 {
 		v((*KeyEvent)(a1))
 	case func(*MouseEvent):
 		v((*MouseEvent)(a1))
+	case func(*WheelEvent):
+		v((*WheelEvent)(a1))
 	case func(*MoveEvent):
 		v((*MoveEvent)(a1))
 	case func(*ResizeEvent):

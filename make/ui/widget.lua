@@ -43,6 +43,7 @@ funcs = [[
 @ SetSizePolicyHV(horizontal SizePolicyPolicy, vertical SizePolicyPolicy)
 @ SetSizePolicy(policy *SizePolicy)
 @ SizePolicy() (policy *SizePolicy)
+WinID() (id int)
 Done()
 Update()
 Repaint()
@@ -61,6 +62,7 @@ RemoveAction(act *Action)
 * OnMouseReleaseEvent(fn func(*MouseEvent))
 * OnMouseMoveEvent(fn func(*MouseEvent))
 * OnMouseDoubleClickEvent(fn func(*MouseEvent))
+* OnWheelEvent(fn func(*WheelEvent))
 * OnMoveEvent(fn func(*MoveEvent))
 * OnPaintEvent(fn func(*PaintEvent))
 * OnResizeEvent(fn func(*ResizeEvent))
@@ -150,7 +152,7 @@ SetFixedSize = "setFixedSize",
 SetGeometry = "setGeometry",
 Geometry = "geometry",
 SetFont = "setFont",
-Font = "font", 
+Font = "font",
 SetToolTip = "setToolTip",
 ToolTip = "toolTip",
 SetUpdatesEnabled = "setUpdatesEnabled",
@@ -160,6 +162,7 @@ ActivateWindow = "activateWindow",
 SetSizePolicyHV = "setSizePolicy",
 SetSizePolicy = "setSizePolicy",
 SizePolicy = "sizePolicy",
+WinID = "winId",
 Done = "close",
 Update = "update",
 Repaint = "repaint",
@@ -203,6 +206,10 @@ drvNewEvent(QEvent::MouseMove,a0,a1,a2);
 
 OnMouseDoubleClickEvent = [[
 drvNewEvent(QEvent::MouseButtonDblClick,a0,a1,a2);
+]],
+
+OnWheelEvent = [[
+drvNewEvent(QEvent::Wheel,a0,a1,a2);
 ]],
 
 OnMoveEvent = [[
