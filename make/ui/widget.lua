@@ -43,6 +43,7 @@ funcs = [[
 @ SetSizePolicyHV(horizontal SizePolicyPolicy, vertical SizePolicyPolicy)
 @ SetSizePolicy(policy *SizePolicy)
 @ SizePolicy() (policy *SizePolicy)
+WinID() (id int)
 Done()
 Update()
 Repaint()
@@ -161,6 +162,7 @@ ActivateWindow = "activateWindow",
 SetSizePolicyHV = "setSizePolicy",
 SetSizePolicy = "setSizePolicy",
 SizePolicy = "sizePolicy",
+WinID = "winId",
 Done = "close",
 Update = "update",
 Repaint = "repaint",
