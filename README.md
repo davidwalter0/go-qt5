@@ -22,7 +22,7 @@ The wrapper code is by far incomplete, so pull requests are more than welcome. A
 	$ lua make.lua
 	$ lua makelib.lua
 ###3. build & install C layer
-	$ cd $GOPATH/src/github.com/salviati/go-qt5/qtdrv
+	$ cd $GOPATH/src/github.com/salviati/go-qt5/goqtdrv5
 	$ qmake "CONFIG+=release"
 	$ make
 	# make install
