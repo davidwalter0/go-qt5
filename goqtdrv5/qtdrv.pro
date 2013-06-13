@@ -53,7 +53,9 @@ symbian {
 }
 
 unix:!symbian {
-    maemo5 {
+    !isEmpty(PREFIX) {
+        target.path = $$PREFIX
+    } else:maemo5 {
         target.path = /opt/usr/lib
     } else {
         target.path = /usr/lib
