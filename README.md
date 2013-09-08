@@ -1,8 +1,12 @@
 #go-qt5
 =====
 
+##Before you start
+This is a fork of visualfc's qt4 bindings, and several critical bugs are inherited along the way. Until these bugs are fixed, **this package is not recommended for any real use**.
+I don't have any time to actively work on this project, but I'll keep reviewing and merging pull requests.
+
 ##Introduction
-go-qt5 is provides with qt5 bindings for Go programming language, based on visualfc's go-ui library.
+go-qt5 provides with qt5 bindings for Go programming language, based on visualfc's go-ui library.
 
 Lua code that generates the wrappers (`uiobjs.go` and `cdrv.cpp`) can be found under `make`.
 
