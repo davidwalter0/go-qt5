@@ -32,6 +32,7 @@
 #include <QBrush>
 #include <QDebug>
 #include <QSizePolicy>
+#include <QLineEdit>
 
 class QDockWidget;
 class QToolBar;
@@ -41,6 +42,7 @@ class QAction;
 class QLayout;
 class QStatusBar;
 class QListWidgetItem;
+class QLineEdit;
 
 #include <stdint.h>
 #if UINTPTR_MAX == 0xffffffff
@@ -327,6 +329,18 @@ inline void drvSetAlignment(void *param,Qt::Alignment value)
 {
     *(goInt*)param = value;
 }
+
+// STS added EchoMode 2013-09-18
+inline QLineEdit::EchoMode drvGetEchoMode(void *param)
+{
+    return (QLineEdit::EchoMode)(*(goInt*)param);
+}
+
+inline void drvSetEchoMode(void *param,QLineEdit::EchoMode value)
+{
+    *(goInt*)param = value;
+}
+
 
 inline Qt::Orientation drvGetOrientation(void *param)
 {

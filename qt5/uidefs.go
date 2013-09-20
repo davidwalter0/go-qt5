@@ -12,6 +12,17 @@ var (
 	EINVAL error = syscall.EINVAL
 )
 
+// STS added EchoMode, 2013-09-18
+type EchoMode int
+
+const (
+	Normal EchoMode = iota
+	NoEcho
+	Password
+	PasswordEchoOnEdit
+)
+
+
 type Alignment int
 
 const (

@@ -44,6 +44,8 @@ funcs = [[
 @ InputMask() (text string)
 @ SetAlignment(value Alignment)
 @ Alignment() (value Alignment)
+@ SetEchoMode(value EchoMode)		// STS added EchoMode, 2013-09-18
+@ EchoMode() (value EchoMode)
 @ SetCursorPos(pos int)
 @ CursorPos() (pos int)
 @ SetDragEnabled(b bool)
@@ -89,6 +91,8 @@ SetInputMask = "setInputMask",
 InputMask = "inputMask",
 SetAlignment = "setAlignment",
 Alignment = "alignment",
+SetEchoMode = "setEchoMode",
+EchoMode = "echoMode",
 SetCursorPos = "setCursorPosition",
 CursorPos = "cursorPosition",
 SetDragEnabled = "setDragEnabled",
@@ -120,7 +124,8 @@ QObject::connect(self,SIGNAL(editingFinished(QString)),drvNewSignal(self,a1,a2),
 ]],
 
 OnReturnPressed = [[
-QObject::connect(self,SIGNAL(returnPressed(QString)),drvNewSignal(self,a1,a2),SLOT(call(QString)));
+// STS // QObject::connect(self,SIGNAL(returnPressed(QString)),drvNewSignal(self,a1,a2),SLOT(call(QString)));
+QObject::connect(self,SIGNAL(returnPressed()),drvNewSignal(self,a1,a2),SLOT(call()));
 ]],
 
 }
