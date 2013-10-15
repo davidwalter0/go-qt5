@@ -5,6 +5,8 @@
 This is a fork of visualfc's qt4 bindings, and several critical bugs are inherited along the way. Until these bugs are fixed, **this package is not recommended for any real use**.
 I don't have any time to actively work on this project, but I'll keep reviewing and merging pull requests.
 
+Meanwhile, have a look at [QML bindings for Go](https://github.com/niemeyer/qml).
+
 ##Introduction
 go-qt5 provides with qt5 bindings for Go programming language, based on visualfc's go-ui library.
 
