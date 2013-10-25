@@ -21,21 +21,26 @@ The wrapper code is by far incomplete, so pull requests are more than welcome. A
 
 ##Using go-qt5
 
-###1. get go-qt5
+###1. Dependencies
+	$ sudo add-apt-repository ppa:ubuntu-sdk-team/ppa
+	$ sudo apt-get update
+	$ sudo apt-get install ubuntu-sdk qtbase5-private-dev qtdeclarative5-private-dev
+	$ sudo apt-get install lua5.2 
+###2. get go-qt5
 	$ go get github.com/salviati/go-qt5
-###2. generate bindings
+###3. generate bindings
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/make
 	$ lua make.lua
 	$ lua makelib.lua
-###3. build & install C layer
+###4. build & install C layer
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/goqtdrv5
 	$ qmake "CONFIG+=release"
 	$ make
 	# make install
-###4.build go-qt5
+###5.build go-qt5
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/qt5
 	$ go install
-###5.build examples
+###6.build examples
 	$ cd $GOPATH/src/github.com/salviati/go-qt5/examples
 	$ go run minimal.go
 
